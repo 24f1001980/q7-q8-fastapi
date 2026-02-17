@@ -30,7 +30,7 @@ jobs:
             cache-cd727cf-${{ runner.os }}-
 
       # 4. Prime the cache (echo cache hit/miss)
-      - name: Prime the cache cd727cf
+      - name: prime-cache-cd727cf
         run: echo "Cache hit/miss result: ${{ steps.cache.outputs.cache-hit }}"
 
       # 5. Install dependencies
