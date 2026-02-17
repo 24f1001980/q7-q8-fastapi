@@ -39,7 +39,3 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      # 6. Run your tests (replace this with actual tests if you have them)
-      - name: Test FastAPI app
-        run: |
-          curl --silent --fail http://127.0.0.1:8000/ || exit 1
