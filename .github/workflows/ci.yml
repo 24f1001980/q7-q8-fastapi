@@ -18,23 +18,27 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'  # or whatever version you're using
+          python-version: '3.9'  # Or any version you're using
 
       # 3. Cache Python dependencies (pip cache)
       - name: Cache dependencies
         uses: actions/cache@v4
         with:
           path: ~/.cache/pip  # This is where pip stores cached packages
-          key: ${{ runner.os }}-pip-cache-${{ hashFiles('**/requirements.txt') }}
+          key: cache-cd727cf-${{ runner.os }}-${{ hashFiles('**/requirements.txt') }}
           restore-keys: |
-            ${{ runner.os }}-pip-cache-
+            cache-cd727cf-${{ runner.os }}-
 
-      # 4. Install dependencies
+      # 4. Prime the cache (echo cache hit/miss)
+      - name: Prime the cache cd727cf
+        run: echo "Cache hit/miss result: ${{ steps.cache.outputs.cache-hit }}"
+
+      # 5. Install dependencies
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
 
-      # 5. Test the app (optional, or replace with your actual test step)
+      # 6. Run your tests (replace this with actual tests if you have them)
       - name: Test FastAPI app
         run: |
           curl --silent --fail http://127.0.0.1:8000/ || exit 1
