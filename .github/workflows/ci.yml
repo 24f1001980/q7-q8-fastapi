@@ -27,7 +27,7 @@ jobs:
         uses: actions/cache@v4  # Using the caching action
         with:
           path: ~/.cache/pip  # This is where pip stores cached packages
-          key: ${{ runner.os }}-cache-cd727cf-${{ hashFiles('**/requirements.txt') }}  # Caching key. It includes the hash of `requirements.txt` to refresh the cache if dependencies change
+          key: cache-cd727cf  # Caching key. It includes the hash of `requirements.txt` to refresh the cache if dependencies change
           restore-keys: ${{ runner.os }}-cache-cd727cf-  # This is the fallback key if the main cache doesn't exist
 
       # 4. Prime the cache (echo cache hit/miss)
