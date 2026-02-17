@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main  # Runs on every push to the 'main' branch
+      - master  # Also run on pushes to `master` (repository uses `master` branch)
 
 jobs:
   build:
@@ -22,6 +23,7 @@ jobs:
 
       # 3. Cache Python dependencies (pip cache)
       - name: Cache pip dependencies
+        id: cache
         uses: actions/cache@v4  # Using the caching action
         with:
           path: ~/.cache/pip  # This is where pip stores cached packages
