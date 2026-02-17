@@ -21,13 +21,14 @@ jobs:
           python-version: '3.9'  # Or any version you're using
 
       # 3. Cache Python dependencies (pip cache)
-      - name: prime-cache-cd727cf
-        uses: actions/cache@v4
+      - name: Cache dependencies
+        uses: actions/cache@v4  # Using the caching action
         with:
-          path: ~/.cache/pip  # This is where pip stores cached packages
-          key: cache-cd727cf-${{ runner.os }}-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            cache-cd727cf-${{ runner.os }}-
+        path: |
+          ~/.cache/pip  # This is where pip stores cached packages
+        key: ${{ runner.os }}-cache-cd727cf-${{ hashFiles('**/requirements.txt') }}  # Caching key. It includes the hash of `requirements.txt` to refresh the cache if dependencies change
+        restore-keys: |
+          ${{ runner.os }}-cache-cd727cf-  # This is the fallback key if the main cache doesn't exist
 
       # 4. Install dependencies
       - name: Install dependencies
