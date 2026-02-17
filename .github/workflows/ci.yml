@@ -21,7 +21,7 @@ jobs:
           python-version: '3.9'  # Or any version you're using
 
       # 3. Cache Python dependencies (pip cache)
-      - name: prime-cache-cd727cf
+      - name: Cache pip dependencies
         uses: actions/cache@v4  # Using the caching action
         with:
         path: |
@@ -30,12 +30,16 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-cache-cd727cf-  # This is the fallback key if the main cache doesn't exist
 
-      # 4. Install dependencies
+      # 4. Prime the cache (echo cache hit/miss)
+      - name: prime-cache-cd727cf  # Use the exact name as required
+        run: echo "Cache hit/miss result ${{ steps.cache.outputs.cache-hit }}"
+
+      # 5. Install dependencies
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
 
-      # 5. Run your tests (replace this with actual tests if you have them)
+      # 6. Run your tests (replace this with actual tests if you have them)
       - name: Test FastAPI app
         run: |
           curl --silent --fail http://127.0.0.1:8000/ || exit 1
