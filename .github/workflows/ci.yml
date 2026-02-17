@@ -1,0 +1,40 @@
+name: FastAPI CI with Caching
+
+on:
+  push:
+    branches:
+      - main  # Runs on every push to the 'main' branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Check out the code
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # 2. Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'  # or whatever version you're using
+
+      # 3. Cache Python dependencies (pip cache)
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip  # This is where pip stores cached packages
+          key: ${{ runner.os }}-pip-cache-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-cache-
+
+      # 4. Install dependencies
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      # 5. Test the app (optional, or replace with your actual test step)
+      - name: Test FastAPI app
+        run: |
+          curl --silent --fail http://127.0.0.1:8000/ || exit 1
